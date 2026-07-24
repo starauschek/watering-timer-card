@@ -7,47 +7,46 @@ Timer function and widget for Home Assistant dashboard for controlling a garden 
 
 ## 🌟 Features
 
-* **Ansprechende Dashboard-Karte:** Schneller Überblick über Restlaufzeiten, Wochentage, Startzeiten und Verbräuche.
-* **Saubere Package-Struktur:** Alle Helfer (*input_number*, *input_datetime*, *input_text*, *timer*) und Automationen pro Bewässerungskreis kompakt in einer einzigen YAML-Datei.
-* **Latenz-Toleranz für Wasserzähler:** Automatische Verzögerung nach Abschaltung, damit zeitversetzte Cloud-Updates (z. B. von Grünbeck-Anlagen) den korrekten Verbrauch erfassen.
-* **Flexible Ventilsteuerung:** Unterstützt Hauptventile/Netzteile sowie Kreise mit Einzel- oder Doppel-Schaltern (z. B. KNX oder Smarte Steckdosen).
+* **Sleek Dashboard Card:** Quick overview of remaining runtimes, selected weekdays, start times, and water consumption.
+* **Clean Package Structure:** All helpers (`input_number`, `input_datetime`, `input_text`, `timer`) and automations per irrigation zone are neatly grouped into a single YAML file.
+* **Latency Tolerance for Water Meters:** Features an automatic delay post-shutoff to allow delayed cloud updates (e.g., from Grünbeck systems) to capture accurate water usage.
+* **Flexible Valve Control:** Supports main power supplies/transformers as well as single- or dual-switch irrigation zones (e.g., KNX relays or smart plugs).
 
 ---
 
-## 📦 1. Installation der Custom Card (`watering-timer-card.js`)
+## 📦 1. Custom Card Installation (`watering-timer-card.js`)
 
-1. Lade die Datei `watering-timer-card.js` in deinen Home Assistant Ordner `www/` hoch (z. B. `/config/www/watering-timer-card.js`).
-2. Gehe in Home Assistant auf **Einstellungen -> Dashboards -> drei Punkte oben rechts -> Ressourcen**.
-3. Füge eine neue Ressource hinzu:
+1. Upload the `watering-timer-card.js` file to your Home Assistant `www/` directory (e.g., `/config/www/watering-timer-card.js`).
+2. In Home Assistant, navigate to **Settings -> Dashboards -> Three Dots (top right) -> Resources**.
+3. Add a new resource:
    * **URL:** `/local/watering-timer-card.js`
-   * **Ressourcentyp:** `JavaScript-Modul`
+   * **Resource Type:** `JavaScript Module`
 
-*(Oder füge das Repository als Benutzerdefiniertes Repository in HACS unter Frontend hinzu).*
+*(Alternatively, add this repository as a Custom Repository in HACS under Frontend).*
 
 ---
 
-## ⚙️ 2. Einrichten des Backend-Packages (`packages/bewaesserung.yaml`)
+## ⚙️ 2. Setting Up the Backend Package (`packages/bewaesserung.yaml`)
 
-### Schritt 2.1: Packages in `configuration.yaml` aktivieren
-Füge folgendes in deine `configuration.yaml` ein, falls noch nicht vorhanden:
+### Step 2.1: Enable Packages in `configuration.yaml`
+Add the following lines to your `configuration.yaml` if you haven't already:
 
 ```yaml
 homeassistant:
   packages: !include_dir_named packages
 ```
-Erstelle anschließend den Ordner packages/ im Hauptverzeichnis deines Home Assistant.
+Next, create a folder named packages/ in your Home Assistant root directory.
 
-### Schritt 2.2: bewaesserung.yaml anlegen
-Erstelle im Ordner packages/ die Datei `bewaesserung.yaml`. Füge dort für jeden deiner Bewässerungskreise die Helfer und Automationen ein.
-Die Muster-Vorlage für einen Bewässerungskreis findest du hier unter den Dateien. 
+### Step 2.2: Create bewaesserung.yaml
+Create the file bewaesserung.yaml inside the packages/ directory. Add the helpers and automations for each of your irrigation zones here. You will find the template for an irrigation zone among the files in this repository.
 
-Wichtig: Der Switch in der Automation unter Punkt #5 muss zur entsprechenden Entität aus der KNX-Integration passen (oder auch eine andere Art von Schalter, wenn es kein KNX bei dir ist).
+Note: The switch in the automation under step #5 must match the corresponding entity from your KNX integration (or any other type of switch entity if you are not using KNX).
 
 ---
 
-## 🎨 3. Dashboard-Karte einbinden
+## 🎨 3. Dashboard Card Configuration
 
-Füge deinem Dashboard eine neue Manuelle Karte hinzu und nutze folgenden YAML-Code:
+Add a new Manual Card to your Home Assistant dashboard and paste the following YAML:
 
 ```yaml
 type: custom:watering-timer-card
@@ -62,8 +61,14 @@ last_water_helper: input_number.beispiel_kreis_verbrauch
 ```
 ---
 
-## 🔄 4. YAMLs neu laden
+## 🔄 4. Reloading YAML Configuration
 
-Nach dem Einfügen in die bewaesserung.yaml musst du Home Assistant nicht komplett neu starten:
-Gehe zu Entwicklerwerkzeuge -> YAML.
-Klicke auf "Alle YAML-Konfigurationen neu laden".
+After editing `bewaesserung.yaml`, you do not need to restart Home Assistant completely:
+
+Go to Developer Tools -> YAML.
+
+Click on "All YAML Configuration".
+
+---
+
+THAT'S IT! I hope it works for you and if not just contact me. 
