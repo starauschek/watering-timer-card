@@ -1,0 +1,119 @@
+# ----------------------------------------------------
+# BEWÄSSERUNGSPAKET: [NAME DES KREISES]
+# ----------------------------------------------------
+
+input_number:
+  beispiel_kreis_dauer:
+    name: "Beispiel Kreis Dauer"
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: "min"
+    icon: mdi:sprinkler
+    mode: slider
+
+  beispiel_kreis_verbrauch:
+    name: "Beispiel Kreis Verbrauch"
+    min: 0
+    max: 99999
+    step: 0.1
+    unit_of_measurement: "l"
+    icon: mdi:water-gauge
+    mode: box
+
+input_datetime:
+  beispiel_kreis_last_run:
+    name: "Beispiel Kreis Last Run"
+    has_date: true
+    has_time: true
+    icon: mdi:history
+
+  beispiel_kreis_zeit:
+    name: "Beispiel Kreis Zeit"
+    has_date: false
+    has_time: true
+    icon: mdi:clock-outline
+
+input_text:
+  beispiel_kreis_w:
+    name: "Beispiel Kreis Wochentage"
+    initial: ""
+    icon: mdi:calendar-week
+
+timer:
+  beispiel_kreis_restlaufzeit:
+    name: "Beispiel Kreis Restlaufzeit"
+    duration: "00:00:00"
+    icon: mdi:timer-sand
+
+# Automation direkt im Package gebündelt
+automation:
+  - alias: "Bewässerung: Beispiel Kreis mit Wasserverbrauchsmessung"
+    description: "Steuert die Bewässerung und berechnet den Verbrauch mit Verzögerung für Cloud-Update"
+    triggers:
+      - at: input_datetime.beispiel_kreis_zeit
+        trigger: time
+    conditions:
+      - condition: numeric_state
+        entity_id: input_number.beispiel_kreis_dauer
+        above: 0
+      - condition: template
+        value_template: >-
+          {{ now().strftime('%a') | replace('Mon','Mo') | replace('Tue','Di') |
+          replace('Wed','Mi') | replace('Thu','Do') | replace('Fri','Fr') |
+          replace('Sat','Sa') | replace('Sun','So') in
+          states('input_text.beispiel_kreis_w') }}
+    actions:
+      # 1. Start-Zählerstand der Wasseruhr/Entkalkungsanlage merken
+      - variables:
+          wasser_start: >-
+            {{ states('sensor.DEIN_WASSERZAEHLER_SENSOR') | float(0) }}
+            
+      # 2. Ventil(e) bzw. Schalter EIN
+      - action: switch.turn_on
+        target:
+          entity_id:
+            - switch.DEIN_VENTIL_SCHALTER
+            # Optional: - switch.DEIN_NETZTEIL_SCHALTER
+            
+      # 3. Restlaufzeit-Timer im Dashboard starten
+      - action: timer.start
+        target:
+          entity_id: timer.beispiel_kreis_restlaufzeit
+        data:
+          duration: 00:{{ states('input_number.beispiel_kreis_dauer') | int }}:00
+          
+      # 4. Laufzeit abwarten
+      - delay:
+          minutes: "{{ states('input_number.beispiel_kreis_dauer') | int }}"
+          
+      # 5. Ventil(e) AUS
+      - action: switch.turn_off
+        target:
+          entity_id:
+            - switch.DEIN_VENTIL_SCHALTER
+            # Optional: - switch.DEIN_NETZTEIL_SCHALTER
+            
+      # 6. Timer stoppen & Zeitstempel setzen
+      - action: timer.finish
+        target:
+          entity_id: timer.beispiel_kreis_restlaufzeit
+          
+      - action: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.beispiel_kreis_last_run
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+      # 7. Wartezeit (z. B. 90 Sek.) für träge Zählerstand-Updates (z. B. Cloud-Integrationen)
+      - delay: "00:01:30"
+
+      # 8. Verbrauchte Wassermenge berechnen & speichern
+      - action: input_number.set_value
+        target:
+          entity_id: input_number.beispiel_kreis_verbrauch
+        data:
+          value: >-
+            {% set wasser_ende = states('sensor.DEIN_WASSERZAEHLER_SENSOR') | float(0) %}
+            {{ (wasser_ende - wasser_start) | round(1) }}
+    mode: single
