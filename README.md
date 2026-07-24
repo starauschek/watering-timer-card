@@ -12,6 +12,8 @@ Timer function and widget for Home Assistant dashboard for controlling a garden 
 * **Latenz-Toleranz für Wasserzähler:** Automatische Verzögerung nach Abschaltung, damit zeitversetzte Cloud-Updates (z. B. von Grünbeck-Anlagen) den korrekten Verbrauch erfassen.
 * **Flexible Ventilsteuerung:** Unterstützt Hauptventile/Netzteile sowie Kreise mit Einzel- oder Doppel-Schaltern (z. B. KNX oder Smarte Steckdosen).
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=starauschek&repository=https%3A%2F%2Fgithub.com%2Fstarauschek%2Fwatering-timer-card.git&category=Addons)
+
 ---
 
 ## 📦 1. Installation der Custom Card (`watering-timer-card.js`)
