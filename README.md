@@ -39,5 +39,29 @@ Erstelle anschließend den Ordner packages/ im Hauptverzeichnis deines Home Assi
 Erstelle im Ordner packages/ die Datei `bewaesserung.yaml`. Füge dort für jeden deiner Bewässerungskreise die Helfer und Automationen ein.
 Die Muster-Vorlage für einen Bewässerungskreis findest du hier unter den Dateien. 
 
+Wichtig: Der Switch in der Automation unter Punkt #5 muss zur entsprechenden Entität aus der KNX-Integration passen (oder auch eine andere Art von Schalter, wenn es kein KNX bei dir ist).
 
+---
 
+## 🎨 3. Dashboard-Karte einbinden
+
+Füge deinem Dashboard eine neue Manuelle Karte hinzu und nutze folgenden YAML-Code:
+
+```yaml
+type: custom:watering-timer-card
+title: Beispiel Kreis
+time_helper: input_datetime.beispiel_kreis_zeit
+duration_helper: input_number.beispiel_kreis_dauer
+days_helper: input_text.beispiel_kreis_w
+valve_switch: switch.DEIN_VENTIL_SCHALTER
+last_run_helper: input_datetime.beispiel_kreis_last_run
+timer_helper: timer.beispiel_kreis_restlaufzeit
+last_water_helper: input_number.beispiel_kreis_verbrauch
+```
+---
+
+## 🔄 4. YAMLs neu laden
+
+Nach dem Einfügen in die bewaesserung.yaml musst du Home Assistant nicht komplett neu starten:
+Gehe zu Entwicklerwerkzeuge -> YAML.
+Klicke auf "Alle YAML-Konfigurationen neu laden".
