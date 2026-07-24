@@ -33,5 +33,11 @@ Füge folgendes in deine `configuration.yaml` ein, falls noch nicht vorhanden:
 homeassistant:
   packages: !include_dir_named packages
 ```
-Bla Bla
+Erstelle anschließend den Ordner packages/ im Hauptverzeichnis deines Home Assistant.
+
+### Schritt 2.2: bewaesserung.yaml anlegen
+Erstelle im Ordner packages/ die Datei `bewaesserung.yaml`. Füge dort für jeden deiner Bewässerungskreise die Helfer und Automationen ein.
+Die Muster-Vorlage für einen Bewässerungskreis findest du hier unter den Dateien. 
+
+
 
