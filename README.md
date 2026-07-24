@@ -3,6 +3,8 @@ Zeitschaltuhr-Funktion und Widget für Home Asisstant Dashboard zur Steuerung un
 
 Timer function and widget for Home Assistant dashboard for controlling a garden home irrigation system via KNX. Also including reading and storing of individual water usage via integration with Grünbeck system. This was developed together with Google Gemini.
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=starauschek&repository=https%3A%2F%2Fgithub.com%2Fstarauschek%2Fwatering-timer-card.git&category=Addons)
+
 <img width="1830" height="1141" alt="image" src="https://github.com/user-attachments/assets/20ce44f3-1943-4995-9ec1-ae38e33d28ed" />
 
 ## 🌟 Features
@@ -11,8 +13,6 @@ Timer function and widget for Home Assistant dashboard for controlling a garden 
 * **Saubere Package-Struktur:** Alle Helfer (*input_number*, *input_datetime*, *input_text*, *timer*) und Automationen pro Bewässerungskreis kompakt in einer einzigen YAML-Datei.
 * **Latenz-Toleranz für Wasserzähler:** Automatische Verzögerung nach Abschaltung, damit zeitversetzte Cloud-Updates (z. B. von Grünbeck-Anlagen) den korrekten Verbrauch erfassen.
 * **Flexible Ventilsteuerung:** Unterstützt Hauptventile/Netzteile sowie Kreise mit Einzel- oder Doppel-Schaltern (z. B. KNX oder Smarte Steckdosen).
-
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=starauschek&repository=https%3A%2F%2Fgithub.com%2Fstarauschek%2Fwatering-timer-card.git&category=Addons)
 
 ---
 
