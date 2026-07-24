@@ -3,7 +3,7 @@ Zeitschaltuhr-Funktion und Widget für Home Asisstant Dashboard zur Steuerung un
 
 Timer function and widget for Home Assistant dashboard for controlling a garden home irrigation system via KNX. Also including reading and storing of individual water usage via integration with Grünbeck system. This was developed together with Google Gemini.
 
-<img width="1825" height="1134" alt="image" src="https://github.com/user-attachments/assets/afe957e2-0b97-4e1b-9f1b-6b6e4129e151" />
+<img width="1830" height="1141" alt="image" src="https://github.com/user-attachments/assets/20ce44f3-1943-4995-9ec1-ae38e33d28ed" />
 
 ## 🌟 Features
 
